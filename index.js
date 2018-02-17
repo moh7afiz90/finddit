@@ -1,3 +1,5 @@
+import reddit from './redditapi'
+
 const searchForm = document.getElementById('search-form')
 const searchInput = document.getElementById('search-input')
 
@@ -7,7 +9,7 @@ searchForm.addEventListener('submit', e => {
   // Get search value
   const searchTerm = searchInput.value
   // Get sort
-  const sortby = document.querySelector('input[name="sortby"]:checked').value
+  const sortBy = document.querySelector('input[name="sortby"]:checked').value
   // Get limit
   const searchLimit = document.getElementById('limit').value
   // Check input
@@ -20,7 +22,7 @@ searchForm.addEventListener('submit', e => {
   searchInput.value = ''
 
   // Search Reddit
-  console.log(searchLimit)
+  reddit.search(searchTerm, searchLimit, sortBy)
   e.preventDefault()
 })
 

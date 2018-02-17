@@ -69,51 +69,69 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({2:[function(require,module,exports) {
-const searchForm = document.getElementById('search-form')
-const searchInput = document.getElementById('search-input')
+})({4:[function(require,module,exports) {
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  search: function (searchTerm, searchLimit, sortBy) {
+    fetch(`http://www.reddit.com/search.json?q=${searchTerm}&sort=${sortBy}&limit=${searchLimit}`).then(res => res.json()).then(data => data.data.children.map(data => data.data)).catch(err => console.log(err));
+  }
+};
+},{}],2:[function(require,module,exports) {
+'use strict';
+
+var _redditapi = require('./redditapi');
+
+var _redditapi2 = _interopRequireDefault(_redditapi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const searchForm = document.getElementById('search-form');
+const searchInput = document.getElementById('search-input');
 
 // Form Event Listener
 searchForm.addEventListener('submit', e => {
   // Get search value
-  const searchTerm = searchInput.value
+  const searchTerm = searchInput.value;
   // Get sort
-  const sortby = document.querySelector('input[name="sortby"]:checked').value
+  const sortBy = document.querySelector('input[name="sortby"]:checked').value;
   // Get limit
-  const searchLimit = document.getElementById('limit').value
+  const searchLimit = document.getElementById('limit').value;
   // Check input
-  if(searchTerm === ''){
+  if (searchTerm === '') {
     // Show error message
-    showMessage('Please add a search term', 'alert-danger')
+    showMessage('Please add a search term', 'alert-danger');
   }
 
   // Clear Input
-  searchInput.value = ''
+  searchInput.value = '';
 
   // Search Reddit
-  console.log(searchLimit)
-  e.preventDefault()
-})
+  _redditapi2.default.search(searchTerm, searchLimit, sortBy);
+  e.preventDefault();
+});
 
 // Show Message
 function showMessage(message, className) {
   // Create Div Element
-  const div = document.createElement('div')
+  const div = document.createElement('div');
   // Add class
-  div.className = `alert ${className}`
+  div.className = `alert ${className}`;
   // Add Text
-  div.appendChild(document.createTextNode(message))
+  div.appendChild(document.createTextNode(message));
   // Get parent container
-  const searchContainer = document.getElementById('search-container')
+  const searchContainer = document.getElementById('search-container');
   // Get Search
-  const search = document.getElementById('search')
+  const search = document.getElementById('search');
   // Insert message
-  searchContainer.insertBefore(div, search)
+  searchContainer.insertBefore(div, search);
   // Timeout alert
-  setTimeout(() => document.querySelector('.alert').remove(), 3000)
+  setTimeout(() => document.querySelector('.alert').remove(), 3000);
 }
-},{}],6:[function(require,module,exports) {
+},{"./redditapi":4}],8:[function(require,module,exports) {
 
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
@@ -133,7 +151,7 @@ module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
-  var ws = new WebSocket('ws://' + hostname + ':' + '63825' + '/');
+  var ws = new WebSocket('ws://' + hostname + ':' + '64467' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -234,5 +252,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.require, id);
   });
 }
-},{}]},{},[6,2])
+},{}]},{},[8,2])
 //# sourceMappingURL=/dist/finddit-app.map
