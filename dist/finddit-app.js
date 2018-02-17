@@ -69,8 +69,50 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({1:[function(require,module,exports) {
+})({2:[function(require,module,exports) {
+const searchForm = document.getElementById('search-form')
+const searchInput = document.getElementById('search-input')
 
+
+// Form Event Listener
+searchForm.addEventListener('submit', e => {
+  // Get search value
+  const searchTerm = searchInput.value
+  // Get sort
+  const sortby = document.querySelector('input[name="sortby"]:checked').value
+  // Get limit
+  const searchLimit = document.getElementById('limit').value
+  // Check input
+  if(searchTerm === ''){
+    // Show error message
+    showMessage('Please add a search term', 'alert-danger')
+  }
+
+  // Clear Input
+  searchInput.value = ''
+
+  // Search Reddit
+  console.log(searchLimit)
+  e.preventDefault()
+})
+
+// Show Message
+function showMessage(message, className) {
+  // Create Div Element
+  const div = document.createElement('div')
+  // Add class
+  div.className = `alert ${className}`
+  // Add Text
+  div.appendChild(document.createTextNode(message))
+  // Get parent container
+  const searchContainer = document.getElementById('search-container')
+  // Get Search
+  const search = document.getElementById('search')
+  // Insert message
+  searchContainer.insertBefore(div, search)
+  // Timeout alert
+  setTimeout(() => document.querySelector('.alert').remove(), 3000)
+}
 },{}],6:[function(require,module,exports) {
 
 var global = (1, eval)('this');
@@ -91,7 +133,7 @@ module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
-  var ws = new WebSocket('ws://' + hostname + ':' + '61629' + '/');
+  var ws = new WebSocket('ws://' + hostname + ':' + '63825' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -192,5 +234,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.require, id);
   });
 }
-},{}]},{},[6,1])
+},{}]},{},[6,2])
 //# sourceMappingURL=/dist/finddit-app.map
